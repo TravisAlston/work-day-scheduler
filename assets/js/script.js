@@ -1,41 +1,44 @@
 
-
-//Diplay current date/time at top of calender (we did it hooray)
 function update() {
     $('#currentDay').html(moment().format('MMM Do, h:mm a'));
+    interval();
 };
     
 setInterval(update, 1000);
 update();
 
-//time blocks for work hours (9-5)(we did it hooray)
+
+function interval() {
+let timeIntervalEls= $(".time-interval")
+
+    timeIntervalEls.each (function(index, item) {
+        let hour= index + 9;
+        let time= moment().hour(hour);
+
+        if(moment().unix() > time.unix()) {
+            item.classList.add("past");
+        } 
+        else if(moment().hour() == time.hour()) {
+            item.classList.add("present");
+        }
+        else {
+            item.classList.add("future");
+        }
+    });
+};
 
 
-//TODO: color code for past/present/future
 
-/* let time = the input value of the column with the hours in it
-let currentTime= the time as displayed by the clock
+$(".time-interval").each (function(index, item) {
+    item.value = localStorage.getItem(index + 9);
+})
 
-we only want this function to read the hour value because as soon as the minute is not the same as the "present" it will move it. we only want it to move on the hour value.
-
-function (timeInterval) {
-
-if ( time = currentTime.hour) {
-    .classAdd present
-}
-if (time (is before) < currentTime.hour) {
-    .classAdd future
-}
-
-if (time > currentTime.hour) {
-    .classAdd past
-}
-} */
-
-
-//enter text/event into time block (we did hooray)
-
-//save text/event into local storage with a button
+$(".saveBtn").each (function(index, item) {
+    let textArea= $(".time-interval")[index]
+    item.addEventListener('click', function () {
+        localStorage.setItem(index + 9, textArea.value);
+    })
+});
 
 
 
